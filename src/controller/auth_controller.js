@@ -25,7 +25,7 @@ const register = async (req, res, next) => {
     } else {
         const _user = await User.findOne({ email: req.body.email });
         if (_user) {
-            res.render('register', { layout: './layout/auth_layouts.ejs', validation_error: [{ msg: 'Bu mail kayıtlı' }] });
+            res.render('register', { layout: './layout/auth_layouts.ejs', validation_error: [{ msg: 'This e-mail is registered' }] });
         }
         else {
             const hashPassword = await bcrypt.hash(req.body.password, 10);
@@ -36,8 +36,7 @@ const register = async (req, res, next) => {
                 password: hashPassword
             });
             await newUser.save();
-            res.render('login', { layout: './layout/auth_layouts.ejs', success_validation: [{ msg: 'Kayıt başarılı, giriş yapabilirsiniz :)' }] })
-            console.log('kullanıcı kaydedildi')
+            res.render('login', { layout: './layout/auth_layouts.ejs', success_validation: [{ msg: 'Registration successful, you can login' }] })
         }
     }
 
@@ -53,16 +52,15 @@ const login = async (req, res, next) => {
     try {
         const _user = await User.findOne({ username: req.body.username });
         if (!_user) {
-            req.flash('validation_error', [{ msg: 'Kullanıcı bulunamadı' }]);
+            req.flash('validation_error', [{ msg: 'User not found' }]);
             res.redirect('login');
         }
         const hashPassword = await bcrypt.compare(req.body.password, _user.password);
         if (!hashPassword) {
-            req.flash('validation_error', [{ msg: 'Şifre hatalıı!!' }]);
-            console.log('Şifre hatalıı!!');
+            req.flash('validation_error', [{ msg: 'Password is incorrect' }]);
             res.redirect('login');
         }
-        req.flash('success_validation', [{ msg: 'Giriş Başarılı' }]);
+        req.flash('success_validation', [{ msg: 'Login successful' }]);
         const token = tokenCreate(req.body._id, _user.id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.redirect('/admin/timeline');

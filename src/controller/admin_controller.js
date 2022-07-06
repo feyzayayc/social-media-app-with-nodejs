@@ -164,36 +164,36 @@ const settings = async (req, res, next) => {
 
             req.flash('validation_error', errorsArray.array());
             res.redirect('settings')
-
-            const user = await User.findById({ _id: req.user_id })
-            if (req.body.name == '' || req.body.oldPassword == '' || req.body.newPassword == '' || req.body.newPasswordAgain == '') {
-                req.flash('validation_error', [{ msg: 'Fields cannot be left blank' }]);
-                res.redirect('settings');
-            }
-            const hashPassword = await bcrypt.compare(req.body.oldPassword, user.password);
-            if (!hashPassword) {
-                req.flash('validation_error', [{ msg: 'The old password is incorrect!' }]);
-                res.redirect('settings');
-            }
-            else if (req.body.newPassword !== req.body.newPasswordAgain) {
-                req.flash('validation_error', [{ msg: 'Passwords are not the same!' }]);
-                res.redirect('settings');
-            }
-            else {
-                const newPassword = await bcrypt.hash(req.body.newPassword, 10);
-                await User.updateOne({ _id: req.user_id }, {
-                    $set: {
-                        name: req.body.name,
-                        password: newPassword
-                    }
-                });
-                req.flash('success_validation', [{ msg: 'Update successful' }]);
-                res.redirect('/admin/timeline');
-            }
+        }
+        const user = await User.findById({ _id: req.user_id })
+        if (req.body.name == '' || req.body.oldPassword == '' || req.body.newPassword == '' || req.body.newPasswordAgain == '') {
+            req.flash('validation_error', [{ msg: 'Fields cannot be left blank' }]);
+            res.redirect('settings');
+        }
+        const hashPassword = await bcrypt.compare(req.body.oldPassword, user.password);
+        if (!hashPassword) {
+            req.flash('validation_error', [{ msg: 'The old password is incorrect!' }]);
+            res.redirect('settings');
+        }
+        else if (req.body.newPassword !== req.body.newPasswordAgain) {
+            req.flash('validation_error', [{ msg: 'Passwords are not the same!' }]);
+            res.redirect('settings');
+        }
+        else {
+            const newPassword = await bcrypt.hash(req.body.newPassword, 10);
+            await User.updateOne({ _id: req.user_id }, {
+                $set: {
+                    name: req.body.name,
+                    password: newPassword
+                }
+            });
+            req.flash('success_validation', [{ msg: 'Update successful' }]);
+            res.redirect('/admin/timeline');
         }
     }
+
     catch (error) {
-            console.error(error);
+        console.error(error);
     }
 }
 

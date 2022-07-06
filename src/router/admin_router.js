@@ -3,6 +3,8 @@ const adminController = require('../controller/admin_controller');
 const authMiddleware = require('../middleware/auth_middleware');
 const validationMiddleware = require('../middleware/validation_middleware');
 
+router.get('/',authMiddleware.isLoggedIn, adminController.showIndex);
+
 router.get('/timeline',authMiddleware.isLoggedIn, adminController.showTimeline);
 router.post('/timeline',authMiddleware.isLoggedIn, adminController.timeline);
 

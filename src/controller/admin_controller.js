@@ -3,6 +3,8 @@ const User = require('../model/user_model');
 const jwt = require('jsonwebtoken');
 const { post } = require('../router/admin_router');
 const bcrypt = require("bcryptjs");
+const { cache } = require('ejs');
+const { validationResult } = require('express-validator');
 
 const showIndex = function (req, res, next) {
     res.redirect('/admin/timeline');
@@ -22,7 +24,7 @@ const showTimeline = async function (req, res, next) {
 const timeline = async (req, res, next) => {
     try {
         if (req.body.shareText.trim() == '') {
-            req.flash('validation_error', [{ msg: 'Boş bırakılamaz' }]);
+            req.flash('validation_error', [{ msg: 'Cannot be blank' }]);
             res.redirect('/admin/timeline');
         }
         else {
@@ -69,7 +71,7 @@ const editPost = async (req, res, next) => {
     }
     else {
         await Post.updateOne({ _id: req.params.id }, { $set: { text: req.body.shareText } });
-        req.flash('success_validation', [{ msg: 'Güncelleme başarılı' }]);
+        req.flash('success_validation', [{ msg: 'Update successful' }]);
         res.redirect('/admin/timeline');
     }
 }
@@ -150,37 +152,51 @@ const dislikePost = async (req, res, next) => {
 
 }
 
+
 const showSettings = async (req, res, next) => {
     const user = await User.findById({ _id: req.user_id })
     res.render('settings', { layout: './../views/layout/admin_layouts.ejs', user: user })
 }
 const settings = async (req, res, next) => {
-    const user = await User.findById({ _id: req.user_id })
-    if (req.body.name == '' || req.body.oldPassword == '' || req.body.newPassword == '' || req.body.newPasswordAgain == '') {
-        req.flash('validation_error', [{ msg: 'Alanlar boş bırakılamaz' }]);
-        res.redirect('settings');
-    }
-    const hashPassword = await bcrypt.compare(req.body.oldPassword, user.password);
-    if (!hashPassword) {
-        req.flash('validation_error', [{ msg: 'Şifre hatalı!!' }]);
-        res.redirect('settings');
-    }
-    else if (req.body.newPassword !== req.body.newPasswordAgain) {
-        req.flash('validation_error', [{ msg: 'Şifreler aynı değil!' }]);
-        res.redirect('settings');
-    }
-    else {
-        const newPassword = await bcrypt.hash(req.body.newPassword, 10);
-        await User.updateOne({ _id: req.user_id }, {
-            $set: {
-                name: req.body.name,
-                password: newPassword
+    try {
+        const errorsArray = validationResult(req);
+        if (!errorsArray.isEmpty()) {
+
+            req.flash('validation_error', errorsArray.array());
+            res.redirect('settings')
+
+            const user = await User.findById({ _id: req.user_id })
+            if (req.body.name == '' || req.body.oldPassword == '' || req.body.newPassword == '' || req.body.newPasswordAgain == '') {
+                req.flash('validation_error', [{ msg: 'Fields cannot be left blank' }]);
+                res.redirect('settings');
             }
-        });
-        req.flash('success_validation', [{ msg: 'Güncelleme başarılı' }]);
-        res.redirect('/admin/timeline');
+            const hashPassword = await bcrypt.compare(req.body.oldPassword, user.password);
+            if (!hashPassword) {
+                req.flash('validation_error', [{ msg: 'The old password is incorrect!' }]);
+                res.redirect('settings');
+            }
+            else if (req.body.newPassword !== req.body.newPasswordAgain) {
+                req.flash('validation_error', [{ msg: 'Passwords are not the same!' }]);
+                res.redirect('settings');
+            }
+            else {
+                const newPassword = await bcrypt.hash(req.body.newPassword, 10);
+                await User.updateOne({ _id: req.user_id }, {
+                    $set: {
+                        name: req.body.name,
+                        password: newPassword
+                    }
+                });
+                req.flash('success_validation', [{ msg: 'Update successful' }]);
+                res.redirect('/admin/timeline');
+            }
+        }
+    }
+    catch (error) {
+            console.error(error);
     }
 }
+
 module.exports = {
     showIndex,
     showTimeline,

@@ -4,29 +4,27 @@ const validateNewUser = () => {
     return [
         body('email')
             .trim()
-            .isEmail().withMessage('Geçerli bir mail adresi giriniz'),
+            .isEmail().withMessage('Please enter a valid e-mail address.'),
 
         body('password')
             .trim()
-            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
-            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters.')
+            .isLength({ max: 16 }).withMessage('Password must be a maximum of 16 characters.'),
 
         body('name')
             .trim()
-            .isLength({ min: 4 }).withMessage('İsim en az 4 karakterli olmalıdır')
-            .isLength({ max: 14 }).withMessage('İsim en fazla 15 karakterli olmalıdır'),
+            .isLength({ min: 4 }).withMessage('Name must be at least 4 characters.')
+            .isLength({ max: 20 }).withMessage('Name must be no more than 20 characters.'),
 
         body('username')
             .trim()
-            .isLength({ min: 3 }).withMessage('Kullanıcı adı en az 3 karakterli olmalıdır')
-            .isLength({ max: 13 }).withMessage('Kullanıcı adı en fazla 13 karakterli olmalıdır'),
+            .isLength({ min: 4 }).withMessage('Username must be at least 4 characters.')
+            .isLength({ max: 16 }).withMessage('Username must be a maximum of 16 characters.'),
 
         body('repassword').custom((value, { req }) => {
             if (value !== req.body.password) {
-                throw new Error('Şifreler aynı değil!');
+                throw new Error('Passwords are not the same!');
             }
-
-            // Indicates the success of this synchronous custom validator
             return true;
         }),
     ]
@@ -36,27 +34,28 @@ const validateLogin = () => {
     return [
         body('username')
             .trim()
-            .isLength({ min: 3 }).withMessage('Kullanıcı adı en az 3 karakterli olmalıdır')
-            .isLength({ max: 13 }).withMessage('Kullanıcı adı en fazla 13 karakterli olmalıdır'),
+            .isLength({ min: 4 }).withMessage('Username must be at least 4 characters.')
+            .isLength({ max: 16 }).withMessage('Username must be a maximum of 16 characters.'),
 
         body('password')
             .trim()
-            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
-            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters.')
+            .isLength({ max: 16 }).withMessage('Password must be a maximum of 16 characters.'),
+
     ]
 }
 
 const validateUpdateUser = () => {
     return [
-        body('newPassword')
+       body('newPassword')
             .trim()
-            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
-            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters.')
+            .isLength({ max: 16 }).withMessage('Password must be a maximum of 16 characters.'),
 
-        body('newPasswordAgain')
+            body('newPasswordAgain')
             .trim()
-            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
-            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+            .isLength({ min: 6 }).withMessage('Password (Again) must be at least 6 characters.')
+            .isLength({ max: 16 }).withMessage('Password (Again) must be a maximum of 16 characters.'),
     ]
 }
 

@@ -52,5 +52,5 @@ app.use('/admin', adminRouter);
 
 
 app.listen(process.env.PORT, () => {
-    console.log(`Listening On Port ${process.env.PORT}`, `http://localhost:${process.env.PORT}`);
+    console.log(`Listening On Port ${process.env.PORT}`, `http://localhost:${process.env.PORT}/admin/timeline`);
 });

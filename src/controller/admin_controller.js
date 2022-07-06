@@ -55,17 +55,21 @@ const deletePost = async (req, res, next) => {
 }
 
 const showEditpost = async (req, res, next) => {
-    const post = await Post.findOne({ _id: req.params.id });
-    res.render('edit', {
-        layout: './../views/layout/admin_layouts.ejs',
-        post: post,
-        // id: userId
-    });
+    try {
+        const post = await Post.findOne({ _id: req.params.id });
+        res.render('edit', {
+            layout: './../views/layout/admin_layouts.ejs',
+            post: post,
+            // id: userId
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
 
 }
 
 const editPost = async (req, res, next) => {
-    const id = String(req.param.id);
     if (!req.body.shareText) {
         throw new Error('Please provided a text');
     }

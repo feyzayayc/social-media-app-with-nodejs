@@ -141,19 +141,7 @@
                     <%- allPosts[index].text %>
                   </p>
 
-                  <ul class="list-inline d-sm-flex my-0" style="color:cadetblue;">
-                    <!-- <li class="list-inline-item g-mr-20">
-                      <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                        <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                        178
-                      </a>
-                    </li>
-                    <li class="list-inline-item g-mr-20">
-                      <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                        <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                        34
-                      </a>
-                    </li> -->
+                  
 
                     <% if (id==allPosts[index].authorId ) {%>
                       <li class="list-inline-item g-mr-20">
@@ -202,16 +190,13 @@
       </div>
       <!-- <div class="container"> -->
       <form class="form-inline justify-content-start " method="post"
-        style="border: 1px solid #4e73df; width: 23%; border-radius: 5px; padding:0.5rem; padding-left: 0rem; margin-left: 1.8rem;">
-        <!-- <div class="form-group mb-2">
-            <label for="staticEmail2" class="sr-only">Email</label>
-            <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com"> -->
-        <!-- </div> -->
+        style="border: 1px solid #4e73df; width: 63%; border-radius: 15px; padding:0.5rem; padding-left: 0rem; margin-left: 1.8rem;">
+ 
         <div class="form-group mx-sm-3 mb-8 ">
           <!-- <label for="inputPassword2" class="sr-only">Password</label> -->
-          <textarea type="text" class="form-control" name="shareText" placeholder="Write something"></textarea>
+          <textarea type="text" rows="2" cols="100" class="form-control" name="shareText" placeholder="Write something"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Share</button>
+        <button type="submit" class="btn btn-primary mb-0">Share</button>
       </form>
       <!-- </div> -->
 

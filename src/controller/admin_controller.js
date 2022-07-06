@@ -49,9 +49,16 @@ const timeline = async (req, res, next) => {
 }
 
 const deletePost = async (req, res, next) => {
-    const id = req.params.id;
-    await Post.deleteOne({ _id: id })
-    res.redirect('/admin/timeline');
+    try {
+        const id = req.params.id;
+        await Post.deleteOne({ _id: id })
+        req.flash('success_validation', [{ msg: 'Delete successful' }]);
+        res.redirect('/admin/timeline');
+
+    }
+    catch (error) { 
+        console.log(error); }
+    
 }
 
 const showEditpost = async (req, res, next) => {

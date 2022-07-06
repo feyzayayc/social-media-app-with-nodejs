@@ -11,7 +11,7 @@
                     <div class="col-lg-6">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Login</h1>
                             </div>
                             <% if (locals.validation_errors !=undefined || locals.success_validation !=undefined|| locals.login_error !=undefined  ) { %>
                                 <%- include('./partials/_mesaj') %>
@@ -19,35 +19,32 @@
                             <form class="user" action="/login" method="post">
                                 <div class="form-group">
                                     <input type="text" name="username" value="<%= typeof username != 'undefined' ? username:''%>" class="form-control form-control-user"
-                                        id="exampleInputEmail" placeholder="Kullanıcı adı" aria-describedby="emailHelp">
+                                        id="exampleInputEmail" placeholder="User name" aria-describedby="emailHelp">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" value="<%= typeof password != 'undefined' ? password:''%>" class="form-control form-control-user"
-                                        id="exampleInputPassword" placeholder="Şifre">
+                                        id="exampleInputPassword" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox small">
                                         <input type="checkbox" class="custom-control-input" id="customCheck">
-                                        <label class="custom-control-label" for="customCheck">Beni Hatırla</label>
+                                        <label class="custom-control-label" for="customCheck">Remember me</label>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Giriş
+                                    Login
                                 </button>
                                 <hr>
                                 <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Google ile giriş yap
+                                    <i class="fab fa-google fa-fw"></i>Sign in with Google
                                 </a>
                                 <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Facebook ile giriş yap
+                                    <i class="fab fa-facebook-f fa-fw"></i> Sign in with Facebook
                                 </a>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="/forget-password">Şifremi Unuttum</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="/register">Hesap Oluştur</a>
+                                <a class="small" href="/register">Create Account</a>
                             </div>
                         </div>
                     </div>

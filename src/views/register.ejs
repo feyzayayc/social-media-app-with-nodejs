@@ -6,7 +6,7 @@
             <div class="col-lg-7">
                 <div class="p-5">
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Kullanıcı Oluştur</h1>
+                        <h1 class="h4 text-gray-900 mb-4">Create User</h1>
                     </div>
                     <% if (locals.validation_error !=undefined) { %>
                         <%- include('./partials/_mesaj') %>
@@ -16,50 +16,47 @@
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <input type="text" value="<%= typeof name != 'undefined' ? name : '' %>"
                                     name="name" class="form-control form-control-user" id="exampleFirstName"
-                                    placeholder="Ad">
+                                    placeholder="Name">
                             </div>
                             <div class="col-sm-6">
                                 <input type="text"
                                     value="<%= typeof username != 'undefined' ? username : '' %>"
                                     name="username" class="form-control form-control-user"
-                                    id="exampleLastName" placeholder="Kullanıcı Adı">
+                                    id="exampleLastName" placeholder="User Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <input type="email" value="<%= typeof email != 'undefined' ? email : '' %>"
                                 name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                placeholder="Email Adresi">
+                                placeholder="E-mail">
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <input type="password"
                                     value="<%= typeof password != 'undefined' ? password : '' %>"
                                     name="password" class="form-control form-control-user"
-                                    id="exampleInputPassword" placeholder="Şifre">
+                                    id="exampleInputPassword" placeholder="Password">
                             </div>
                             <div class="col-sm-6">
                                 <input type="password"
                                     value="<%= typeof repassword != 'undefined' ? repassword : '' %>"
                                     name="repassword" class="form-control form-control-user"
-                                    id="exampleRepeatPassword" placeholder="Şifre (Tekrar)">
+                                    id="exampleRepeatPassword" placeholder="Password (Again)">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-user btn-block">
-                            Kullanıcı Oluştur </button>
+                            Create User </button>
                         <hr>
                         <a href="index.html" class="btn btn-google btn-user btn-block">
-                            <i class="fab fa-google fa-fw"></i> Google ile oluştur
+                            <i class="fab fa-google fa-fw"></i> Create With Google
                         </a>
                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                            <i class="fab fa-facebook-f fa-fw"></i> Facebook ile oluştur
+                            <i class="fab fa-facebook-f fa-fw"></i> Create With Facebook 
                         </a>
                     </form>
                     <hr>
                     <div class="text-center">
-                        <a class="small" href="/forget-password">Şifremi Unuttum</a>
-                    </div>
-                    <div class="text-center">
-                        <a class="small" href="/login">Hesabın var mı? Giriş yap!</a>
+                        <a class="small" href="/login">Do you have an account? Login!</a>
                     </div>
                 </div>
             </div>

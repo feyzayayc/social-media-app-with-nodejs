@@ -46,7 +46,22 @@ const validateLogin = () => {
     ]
 }
 
+const validateUpdateUser = () => {
+    return [
+        body('newPassword')
+            .trim()
+            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
+            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+
+        body('newPasswordAgain')
+            .trim()
+            .isLength({ min: 6 }).withMessage('Şifre en az 6 karakterli olmalıdır')
+            .isLength({ max: 16 }).withMessage('Şifre en fazla 16 karakterli olmalıdır'),
+    ]
+}
+
 module.exports = {
     validateNewUser,
-    validateLogin
+    validateLogin,
+    validateUpdateUser
 };

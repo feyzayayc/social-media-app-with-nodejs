@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     name: {
         type: String,
-        require: [true, 'İsim alanı boş olamaz.'],
+        require:true,
         trim: true,
         maxLength: 20
     },
     email: {
         type: String,
-        require: [true, 'Mail alanı boş olmaz.'],
-        unique: [true, 'Bu mail kayıtlı!'],
+        require: true,
+        unique: true,
         trim: true,
     },
     username: {
         type: String,
-        require: [true, 'Kullanıcı adı alanı boş olamaz.'],
-        unique: [true, 'Kullanıcı adını alamazsınız.'],
+        require: true,
+        unique: true,
         trim: true,
         maxLength: 15
     },
